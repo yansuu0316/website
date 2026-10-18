@@ -1,4 +1,6 @@
-/* B version: only section heading presentation differs from A. */
+/* Shared editorial headings for B/C, with explicitly scoped B-only adjustments. */
+.editorial-version:not(.calligraphy-version) #exchange .poster-image img{object-fit:cover;object-position:center top}
+.editorial-version:not(.calligraphy-version) #exchange .poster-summary{display:none}
 .editorial-version .section-head h2.editorial-heading{display:block;font-family:var(--serif);font-size:40px;font-weight:700;line-height:1.4;letter-spacing:1px;color:var(--ink)}
 .editorial-heading .heading-eyebrow{display:block;font:650 10px/1.6 var(--sans);letter-spacing:2.5px;color:var(--red);margin-bottom:8px}
 .editorial-heading .heading-phrase{display:inline;color:var(--ink)}
