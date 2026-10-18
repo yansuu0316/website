@@ -1,0 +1,87 @@
+const $=(s,root=document)=>root.querySelector(s);
+const $$=(s,root=document)=>[...root.querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const reduced=()=>matchMedia('(prefers-reduced-motion:reduce)').matches;
+// Lists use compact previews; full poster files load only when explicitly opened.
+function mediaAttributes(file,kind='full'){
+ const item=IMAGE_ASSETS[file];if(!item)return {src:'assets/'+file,decoding:'async'};
+ const v=item[kind]||item.full;
+ const attrs={width:v.width,height:v.height,decoding:'async'};
+ if(kind==='hero'){
+  attrs.srcset=[item.thumb,item.medium,item.full].filter(Boolean).map(x=>`assets/${x.file} ${x.width}w`).join(', ');
+  attrs.sizes='100vw';
+ }
+ attrs.src='assets/'+v.file;return attrs;
+}
+function imageAttrs(file,kind='full'){return Object.entries(mediaAttributes(file,kind)).map(([k,v])=>`${k}="${esc(v)}"`).join(' ');}
+function setMedia(element,file,kind='full'){Object.entries(mediaAttributes(file,kind)).forEach(([k,v])=>element.setAttribute(k,v));}
+
+const arrow='<svg aria-hidden="true"><use href="#i-arrow"/></svg>';
+const storyDate={translation:'2026.10.16',ai:'2026.10.12',oriental:'2026.10.13'};
+// Titles and images are supplied source material. Short introductions are demo editorial copy.
+notices.push({date:'10.16',category:'all',title:'关于“师者·风华”——外国语学院肖像拍摄活动的通知'},{date:'09.20',category:'all',title:'浙江大学外国语学院诚聘海内外英才'});
+stories.readwrite={title:'第十四届浙江大学大学生英语读写大赛圆满举行',tag:'教育教学 · 2026.10.08',body:'在英语阅读与写作的实践中提升语言表达能力。',source:'标题与日期参考学院首页，完整报道待补充。'};storyDate.readwrite='2026.10.08';
+stories.oriental.source='标题、日期与主题参考学院首页，完整报道待补充。';
+const categories={
+ news:{title:'此刻外院',keys:['training','semester','manuscripts','faculty','award','freshmen','workshop','books','translation','ai','readwrite','fitness','unesco','goglobal','farming','xianju','oriental']},
+ research:{title:'学术动态',keys:['workshop','books','faculty','oriental','ai']},
+ education:{title:'教育教学',keys:['freshmen','translation','ai','readwrite']},
+ life:{title:'学子风采',keys:['award','fitness','unesco','farming','xianju','goglobal','freshmen']},
+ global:{title:'国际交流',keys:['goglobal','manuscripts','france','unesco','visiting']},
+ exchange:{title:'学术交流'},notices:{title:'通知公告'}
+};
+function card(key){const s=stories[key];return `<a class="photo-card" href="#article/${key}"><div class="photo"><img ${imageAttrs(s.image,'thumb')} alt="${esc(s.title)}" loading="lazy"><span class="label">${esc(s.tag.split(' · ')[0])}</span></div><h3>${esc(s.title)}</h3><p>${esc(s.body)}</p><span class="meta">${storyDate[key]||s.tag}</span></a>`;}
+function listLink(key,description=false){const s=stories[key];return `<a class="list-link" href="#article/${key}"><div><h3>${esc(s.title)}</h3>${description?`<p>${esc(s.body)}</p>`:''}</div>${storyDate[key]?`<time>${storyDate[key].slice(5)}</time>`:''}</a>`;}
+function dateBox(date){const [month,day]=date.split('.');return `<span class="date-box"><b>${day}</b><small>${month}月</small></span>`;}
+function noticeLink(n,i){return `<a class="notice-item" href="#notice/${i}">${dateBox(n.date)}<h3>${esc(n.title)}</h3></a>`;}
+$('#news-grid').innerHTML=['training','semester','manuscripts','faculty'].map(card).join('');
+$('#news-list').innerHTML=['translation','ai','readwrite'].map(k=>listLink(k)).join('');
+$('#research-cards').innerHTML=['workshop','books'].map(card).join('');
+$('#research-list').innerHTML=['faculty','oriental','ai'].map(k=>listLink(k,true)).join('');
+$('#life-cards').innerHTML=['award','fitness','unesco','farming','xianju','goglobal'].map(card).join('');
+$('#global-track').innerHTML=['goglobal','manuscripts','france','visiting'].map(card).join('');
+function renderNotices(filter){$('#notice-list').innerHTML=notices.map((n,i)=>({n,i})).filter(({n})=>filter==='all'||n.category===filter).map(({n,i})=>noticeLink(n,i)).join('');}
+renderNotices('all');
+function setupTabs(selector,render,key){const buttons=$$(selector);function select(b){buttons.forEach(t=>{const selected=t===b;t.classList.toggle('selected',selected);t.setAttribute('aria-selected',String(selected));t.tabIndex=selected?0:-1;});render(b.dataset[key]);}buttons.forEach((b,i)=>{b.tabIndex=i===0?0:-1;b.addEventListener('click',()=>select(b));b.addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();const n=e.key==='Home'?0:e.key==='End'?buttons.length-1:(i+(e.key==='ArrowRight'?1:-1)+buttons.length)%buttons.length;select(buttons[n]);buttons[n].focus();}});});}
+setupTabs('[data-filter]',renderNotices,'filter');
+function renderEducation(type){const key=type==='graduate'?'goglobal':'freshmen',s=stories[key];let rows=type==='graduate'?['ai','award']:['translation','ai','readwrite'];$('#education-content').innerHTML=`<div class="education-panel"><a class="education-feature" href="#article/${key}"><img ${imageAttrs(s.image,'thumb')} alt="${esc(s.title)}" loading="lazy"><div><h3>${esc(s.title)}</h3><p>${esc(s.body)}</p></div></a><div class="education-list">${rows.map(k=>listLink(k)).join('')}${type==='graduate'?`<a class="list-link" href="#notice/0"><h3>${esc(notices[0].title)}</h3></a>`:''}</div></div>`;}
+renderEducation('all');setupTabs('[data-education]',renderEducation,'education');
+function posterCard(p,i){return `<a class="poster-card" href="#lecture/${i}" aria-label="查看${esc(p.title)}"><span class="poster-image"><img ${imageAttrs(p.image,'thumb')} alt="${esc(p.title)}海报" loading="lazy"><span>查看讲座详情</span></span><span class="poster-info"><span class="date-box"><b>${p.date}</b><small>10月</small></span><span><h3>${esc(p.title)}</h3><p>${esc(p.speaker)}</p></span></span><span class="poster-summary">${esc(p.summary)}</span><span class="poster-venue">${esc(p.venue)}</span></a>`;}
+$('#poster-track').innerHTML=posters.map(posterCard).join('');
+function trackController(id,previous,next){const track=$(id),prev=$(previous),nxt=$(next);function move(dir){const card=track.firstElementChild;const gap=parseFloat(getComputedStyle(track).gap)||0;track.scrollBy({left:dir*(card.getBoundingClientRect().width+gap),behavior:reduced()?'instant':'smooth'});}function update(){const overflow=track.scrollWidth-track.clientWidth;prev.disabled=track.scrollLeft<3;nxt.disabled=track.scrollLeft>=overflow-3;}
+prev.addEventListener('click',()=>move(-1));nxt.addEventListener('click',()=>move(1));track.addEventListener('scroll',update,{passive:true});window.addEventListener('resize',update);track.addEventListener('keydown',e=>{if(e.target===track&&['ArrowLeft','ArrowRight'].includes(e.key)){e.preventDefault();move(e.key==='ArrowRight'?1:-1);}});update();}
+trackController('#poster-track','#poster-prev','#poster-next');trackController('#global-track','#global-prev','#global-next');
+const heroes=[{image:'magnolia.jpg',kicker:'求是文脉 · 外院新章',title:'语通世界<br>文传未来<span class="seal">求是</span>',description:'以语言连接世界，以人文照见未来。\n在浙大外院，与多元文明相遇。',url:'#college',cta:'走进外国语学院'},
+{image:'students.jpg',kicker:'教育教学 · 新生启程',title:'外国语学院2026级迎新大会<br>暨开学第一课',description:'以求是之心，开启大学新篇章',url:'#article/freshmen',cta:'查看详情'},
+{image:'books.jpg',kicker:'学术动态 · 全球视野',title:'“国际组织与全球治理”<br>丛书发布会',description:'连接学术视野，回应时代议题',url:'#article/books',cta:'查看详情'},
+{image:'go-global.jpg',kicker:'国际交流 · 知行致远',title:'“致远”计划“Go Global”<br>研究生社会实践顺利收官',description:'在交流与实践中拓展国际视野',url:'#article/goglobal',cta:'查看详情'}];
+let heroIndex=0,timer=null;
+$('#hero-dots').innerHTML=heroes.map((h,i)=>`<button aria-label="第${i+1}张头图" aria-pressed="${i===0}" data-hero="${i}" class="${i===0?'selected':''}"></button>`).join('');
+function setHero(i){heroIndex=(i+heroes.length)%heroes.length;const h=heroes[heroIndex];setMedia($('#hero-image'),h.image,'hero');$('#hero-image').alt=h.title.replace(/<br>/g,' ').replace(/<[^>]*>/g,'');$('#hero-kicker').textContent=h.kicker;$('#hero-title').innerHTML=h.title;$('.hero').classList.toggle('story-slide',heroIndex!==0);$('#hero-description').textContent=h.description;$('#hero-link').href=h.url;$('#hero-link').innerHTML=h.cta+arrow;$('#hero-count').innerHTML=`0${heroIndex+1} <small>/ 04</small>`;$$('[data-hero]').forEach(b=>{b.classList.toggle('selected',+b.dataset.hero===heroIndex);b.setAttribute('aria-pressed',String(+b.dataset.hero===heroIndex));});}
+function stopHero(){clearInterval(timer);timer=null;$('#hero-play').textContent='▶';$('#hero-play').setAttribute('aria-pressed','false');$('#hero-play').setAttribute('aria-label','自动播放头图');}
+$$('[data-hero]').forEach(b=>b.addEventListener('click',()=>{stopHero();setHero(+b.dataset.hero);}));$('#hero-prev').addEventListener('click',()=>{stopHero();setHero(heroIndex-1);});$('#hero-next').addEventListener('click',()=>{stopHero();setHero(heroIndex+1);});$('#hero-play').addEventListener('click',()=>{if(timer)stopHero();else{timer=setInterval(()=>setHero(heroIndex+1),6500);$('#hero-play').textContent='Ⅱ';$('#hero-play').setAttribute('aria-label','暂停头图轮播');$('#hero-play').setAttribute('aria-pressed','true');}});document.addEventListener('visibilitychange',()=>{if(document.hidden)stopHero();});
+let startX=null;$('.hero').addEventListener('touchstart',e=>{startX=e.touches[0].clientX;},{passive:true});$('.hero').addEventListener('touchend',e=>{if(startX!==null){const dx=e.changedTouches[0].clientX-startX;if(Math.abs(dx)>60){stopHero();setHero(heroIndex+(dx<0?1:-1));}startX=null;}},{passive:true});
+function breadcrumb(label){return `<div class="breadcrumb"><a href="#main">首页</a>　/　${label}</div>`;}
+function storyPage(key){const s=stories[key];if(!s)return missing();return breadcrumb(`<a href="#category/news">学院资讯</a>　/　正文`)+`<article class="article"><span class="article-tag">${esc(s.tag)}</span><h1>${esc(s.title)}</h1><div class="article-meta">浙江大学外国语学院${storyDate[key]?' · '+storyDate[key]:''}</div>${s.image?`<img class="article-image" ${imageAttrs(s.image)} alt="${esc(s.title)}">`:''}<p class="article-body">${esc(s.body)}</p><p class="article-note">内容展示说明：${esc(s.source)}</p><div class="article-actions"><a href="#category/news">返回资讯列表</a><a href="#main">返回首页</a></div><section class="related"><h2>相关资讯</h2>${Object.keys(stories).filter(k=>k!==key&&stories[k].tag.split(' · ')[0]===s.tag.split(' · ')[0]).slice(0,3).map(k=>listLink(k)).join('')||listLink('books')}</section></article>`;}
+function noticePage(i){const n=notices[i];if(!n)return missing();return breadcrumb('<a href="#category/notices">通知公告</a>　/　正文')+`<article class="article"><span class="article-tag">通知公告</span><h1>${esc(n.title)}</h1><div class="article-meta">发布时间：${n.date.replace('.','月')}日</div><p class="article-body">${esc(n.title)}</p><p class="article-note">当前素材仅包含通知标题和发布日期，完整通知正文与附件尚未提供。本页用于展示新网站的通知详情结构。</p><div class="article-actions"><a href="#category/notices">返回通知列表</a><a href="#main">返回首页</a></div></article>`;}
+function lecturePage(i){const p=posters[i];if(!p)return missing();return breadcrumb('<a href="#category/exchange">学术交流</a>　/　讲座详情')+`<article class="article"><span class="article-tag">${esc(p.tag)}</span><h1>${esc(p.title)}</h1><div class="article-facts"><span><b>主讲人：</b>${esc(p.speaker)}</span><span><b>时间：</b>${esc(p.time)}</span><span><b>地点：</b>${esc(p.venue)}</span></div><p class="article-body">${esc(p.summary)}</p><button class="poster-enlarge" data-enlarge="${i}" aria-label="放大完整海报"><img class="poster-detail-image" ${imageAttrs(p.image,'detail')} alt="${esc(p.title)}完整海报"><b>点击放大海报</b></button><p class="article-note">讲座信息按所提供海报整理；未标注年份的海报保留原文，实际活动安排以正式通知为准。</p><div class="article-actions"><a href="#category/exchange">返回学术交流</a><a href="#main">返回首页</a></div></article>`;}
+function categoryPage(key){const c=categories[key];if(!c)return missing();let content;if(key==='notices')content=`<div class="category-notices">${notices.map(noticeLink).join('')}</div>`;else if(key==='exchange')content=`<div class="category-posters">${posters.map(posterCard).join('')}</div>`;else content=`<div class="category-grid">${c.keys.map(k=>stories[k].image?card(k):`<a class="text-card" href="#article/${k}"><h3>${esc(stories[k].title)}</h3><p>${esc(stories[k].body)}</p></a>`).join('')}</div>`;return breadcrumb(esc(c.title))+`<h1 class="category-title">${c.title}</h1>${content}`;}
+function collegePage(){return breadcrumb('学院概况')+`<h1 class="category-title">学院概况</h1><div class="college-grid"><img ${imageAttrs('magnolia.jpg')} alt="外国语学院建筑与玉兰"><div><h2>浙江大学外国语学院</h2><p class="college-motto">语通世界　言载九州<br>文传未来　化成天下</p><p>学贯中西，格物致知。</p><p>通过本网站了解此刻外院、教学资讯、学术研究、学生成长与国际交流。</p><div class="article-actions"><a href="#category/education">教育教学</a><a href="#category/research">科学研究</a><a href="#category/global">国际交流</a></div></div></div><p class="article-note">本页展示学院概况页的版式，完整院史、机构设置和师资资料待补充。</p>`;}
+const topics={
+ masters:{title:'外院大先生',intro:'走近外院师者，记录治学精神与育人故事。',keys:['faculty','ai']},
+ stories:{title:'外院故事',intro:'在求学、实践与交流中，看见外院人的日常与成长。',keys:['unesco','farming','xianju','goglobal']},
+ centenary:{title:'百年院庆',intro:'赓续文脉，回望来路，共赴未来。',keys:[]},
+ gallery:{title:'时光影像馆',intro:'以影像珍藏相聚的瞬间，记录校园生活与外院记忆。',keys:['freshmen','manuscripts','fitness','training']}
+};
+function topicPage(key){const t=topics[key];if(!t)return missing();return breadcrumb('<a href="#topics">专题系列</a>　/　'+esc(t.title))+`<h1 class="category-title">${esc(t.title)}</h1><p class="topic-intro">${esc(t.intro)}</p>${t.keys.length?`<div class="category-grid">${t.keys.map(k=>stories[k].image?card(k):`<a class="text-card" href="#article/${k}"><h3>${esc(stories[k].title)}</h3><p>${esc(stories[k].body)}</p></a>`).join('')}</div>`:'<div class="topic-empty">院史回顾 · 师生记忆 · 院庆活动<br>本专题内容待补充。</div>'}<div class="article-actions"><a href="#topics">返回专题系列</a></div>`;}
+function missing(){return breadcrumb('内容未找到')+'<h1 class="category-title">暂未找到该内容</h1><p>请返回首页或使用站内搜索。</p><div class="article-actions"><a href="#main">返回首页</a></div>';}
+function updateRoute(){const route=decodeURIComponent(location.hash.slice(1)||'main');const [type,key]=route.split('/');const internal=['category','article','notice','lecture','college','topic'].includes(type);$('#home-view').hidden=internal;$('#content-view').hidden=!internal;$('.nav').classList.remove('open');$('.menu-toggle').setAttribute('aria-expanded','false');stopHero();
+if(internal){$('#content-view').innerHTML=type==='category'?categoryPage(key):type==='article'?storyPage(key):type==='notice'?noticePage(+key):type==='lecture'?lecturePage(+key):type==='topic'?topicPage(key):collegePage();document.title=($('#content-view h1')?.textContent||'学院概况')+' | 浙江大学外国语学院';window.scrollTo({top:0,behavior:'instant'});$('#content-view').focus({preventScroll:true});}
+else{document.title='浙江大学外国语学院';if(type==='main'){window.scrollTo({top:0,behavior:'instant'});}else{const target=document.getElementById(type)||$('#main');target.scrollIntoView({behavior:'instant',block:'start'});}}
+$$('.nav a').forEach(a=>a.classList.toggle('active',a.hash===location.hash||(route==='main'&&a.hash==='#main')));}
+window.addEventListener('hashchange',updateRoute);updateRoute();
+let dialogTrigger=null;$$('dialog').forEach(d=>{$('.dialog-close',d).addEventListener('click',()=>d.close());d.addEventListener('click',e=>{if(e.target===d){const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close();}});d.addEventListener('close',()=>{if(dialogTrigger?.isConnected)dialogTrigger.focus();});});
+document.addEventListener('click',e=>{const b=e.target.closest('[data-enlarge]');if(b){dialogTrigger=b;const p=posters[+b.dataset.enlarge];$('#poster-dialog-content').innerHTML=`<h2 id="poster-dialog-title">${esc(p.title)}</h2><img ${imageAttrs(p.image)} alt="${esc(p.title)}完整海报">`;$('#poster-dialog').showModal();}});
+$('.menu-toggle').addEventListener('click',()=>{const opened=$('.nav').classList.toggle('open');$('.menu-toggle').setAttribute('aria-expanded',String(opened));});
+$('.search-toggle').addEventListener('click',()=>{dialogTrigger=document.activeElement;$('#search-dialog').showModal();$('#search-input').focus();});
+$('#search-form').addEventListener('submit',e=>{e.preventDefault();const q=$('#search-input').value.trim().toLowerCase(),results=[];if(q){Object.entries(topics).forEach(([k,t])=>{if((t.title+t.intro).toLowerCase().includes(q))results.push({url:'#topic/'+k,title:t.title,label:'专题系列'});});Object.entries(stories).forEach(([k,s])=>{if((s.title+s.body+s.tag).toLowerCase().includes(q))results.push({url:'#article/'+k,title:s.title,label:s.tag});});posters.forEach((p,i)=>{if((p.title+p.speaker+p.summary).toLowerCase().includes(q))results.push({url:'#lecture/'+i,title:p.title,label:'学术交流'});});notices.forEach((n,i)=>{if(n.title.toLowerCase().includes(q))results.push({url:'#notice/'+i,title:n.title,label:'通知公告'});});}$('#search-results').innerHTML=results.length?results.map(r=>`<a class="search-result" href="${r.url}"><small>${esc(r.label)}</small>${esc(r.title)}</a>`).join(''):`<p class="empty">${q?'没有找到相关内容，请尝试其他关键词。':'请输入关键词。'}</p>`;$$('.search-result').forEach(a=>a.addEventListener('click',()=>$('#search-dialog').close()));});

@@ -1,0 +1,18 @@
+/* B version: only section heading presentation differs from A. */
+.editorial-version .section-head h2.editorial-heading{display:block;font-family:var(--serif);font-size:40px;font-weight:700;line-height:1.4;letter-spacing:1px;color:var(--ink)}
+.editorial-heading .heading-eyebrow{display:block;font:650 10px/1.6 var(--sans);letter-spacing:2.5px;color:var(--red);margin-bottom:8px}
+.editorial-heading .heading-phrase{display:inline;color:var(--ink)}
+.editorial-heading .heading-phrase em{color:var(--red);font-style:normal}
+.editorial-version .section-head h2.editorial-heading small{display:inline-block;font:650 13px/1.5 var(--sans);color:var(--muted);letter-spacing:2px;margin-left:20px;vertical-align:middle}
+.editorial-version #notices .section-head h2.editorial-heading{font-size:40px}
+.editorial-version #notices .editorial-heading small{margin-left:12px;font-size:12px;letter-spacing:1px}
+.editorial-version .research .editorial-heading .heading-eyebrow{color:#f5cdd1}
+.editorial-version .research .editorial-heading .heading-phrase{color:#fff}
+.editorial-version .research .editorial-heading .heading-phrase em{color:#ffc6cd}
+.editorial-version .research .section-head h2.editorial-heading small{color:#f3d7da}
+.editorial-version .services h2.editorial-heading{font:700 25px/1.4 var(--serif);flex-basis:190px}
+.editorial-version .services .editorial-heading small{display:block;font:600 11px/1.5 var(--sans);letter-spacing:2px;color:var(--muted);margin-top:5px}
+.editorial-version .services .heading-eyebrow{font-size:9px;margin-bottom:4px}
+@media(max-width:1100px){.editorial-version .section-head h2.editorial-heading{font-size:33px}.editorial-version #notices .section-head h2.editorial-heading{font-size:33px}.editorial-version .section-head h2.editorial-heading small{font-size:11px;margin-left:12px;letter-spacing:1px}}
+@media(max-width:800px){.editorial-version .section-head h2.editorial-heading{font-size:28px}.editorial-version #notices .section-head h2.editorial-heading{font-size:28px}.editorial-version .section-head h2.editorial-heading small{display:block;margin:5px 0 0}.editorial-heading .heading-eyebrow{font-size:8px;letter-spacing:1.5px;margin-bottom:6px}.editorial-version .services h2.editorial-heading{flex-basis:140px;font-size:22px}}
+@media(max-width:560px){.editorial-version .section-head h2.editorial-heading{font-size:29px;letter-spacing:0}.editorial-version #notices .section-head h2.editorial-heading{font-size:29px}.editorial-version .section-head h2.editorial-heading small{font-size:10px;letter-spacing:2px}.editorial-version .services h2.editorial-heading{flex-basis:100%}.editorial-version .services h2.editorial-heading small{display:inline-block;margin-left:12px}.editorial-version .services .heading-eyebrow{display:block}}

@@ -1,0 +1,9 @@
+/* C builds on B; only decorative motto lettering changes. */
+.calligraphy-version .script-bg{position:absolute;width:clamp(100px,13.5vw,210px);height:auto;aspect-ratio:1/4;top:50%;bottom:auto;transform:translateY(-50%);font-size:0;color:transparent;letter-spacing:0;background:var(--red);opacity:.055;pointer-events:none;mask-image:url('assets/motto-brush.webp');mask-size:400% 100%;mask-repeat:no-repeat;mask-mode:alpha}
+.calligraphy-version .exchange-script{right:-12px;mask-position:66.666667% 0}
+.calligraphy-version .life-script{left:-18px;right:auto;mask-position:33.333333% 0;opacity:.065}
+.calligraphy-version .research-script{right:1%;mask-position:100% 0;background:#fff;opacity:.055}
+.calligraphy-version #global{position:relative;overflow:hidden}
+.calligraphy-version .global-script{right:-18px;mask-position:0 0}
+.calligraphy-version #global>.section-head,.calligraphy-version #global>.global-track,.calligraphy-version #global>.global-bottom{position:relative;z-index:1}
+@media(max-width:560px){.calligraphy-version .script-bg{width:100px;opacity:.04}.calligraphy-version .research-script{opacity:.045}}
