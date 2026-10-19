@@ -18,9 +18,11 @@
     const fullTitle = topic === 'centenary' || id === 'scholarship-zhang' ? title : topics[topic].title + ' | ' + title;
     stories[id] = {title: fullTitle, tag: topics[topic].title, body: '', source: '标题由学院提供，完整正文待补充。'};
   }
+  topics.party = {title:'党建引领', intro:'以党建引领发展，在实干中践行初心使命。', keys:['training','semester']};
   const lists = {
+    party: topics.party.keys,
     masters: interviews.filter(item => item[1] === 'masters').map(item => item[0]),
-    stories: interviews.filter(item => item[1] === 'stories').map(item => item[0]),
+    stories: interviews.filter(item => item[1] === 'stories').map(item => item[0]).concat(interviews.filter(item => item[1] === 'masters').map(item => item[0])),
     centenary: interviews.filter(item => item[1] === 'centenary').map(item => item[0]),
     gallery: topics.gallery.keys
   };
@@ -29,12 +31,22 @@
   topics.stories.keys = [...lists.stories, ...topics.stories.keys];
   const grid = document.querySelector('#topics .topic-grid');
   if (!grid) return;
-  const covers = Array.from(grid.querySelectorAll('.topic-card')).map(a => ({key: a.hash.split('/')[1], art: a.querySelector('.topic-art').outerHTML}));
+  const covers = [
+    {key:'party', image:'party-building.jpg', subtitle:'初心如磐 · 笃行致远'},
+    {key:'stories', image:'stories.webp', subtitle:'师友相伴 · 薪火相传'},
+    {key:'centenary', image:'centenary.webp', subtitle:'百年文脉 · 共赴新程'},
+    {key:'gallery', image:'gallery.webp', subtitle:'光影流年 · 珍藏记忆'}
+  ];
+  function readingItem(id) {
+    const date = storyDate[id];
+    const stamp = date ? `<time datetime="${date.replaceAll('.', '-')}">${esc(date)}</time>` : '<span>日期待补充</span>';
+    return `<li><a href="#article/${id}"><span class="topic-row-title">${esc(stories[id].title)}</span><span class="topic-row-date"><span>${stamp}</span></span></a></li>`;
+  }
   grid.classList.add('topic-accordion');
-  grid.innerHTML = covers.map(({key, art}) => {
+  grid.innerHTML = covers.map(({key, image, subtitle}, index) => {
     const topic = topics[key];
     const items = lists[key];
-    return `<section class="topic-slide" data-topic="${key}"><button class="topic-cover" type="button" aria-label="展开${esc(topic.title)}内容" aria-expanded="false" aria-controls="topic-panel-${key}">${art}</button><div class="topic-panel" id="topic-panel-${key}" aria-label="${esc(topic.title)}内容" aria-hidden="true" inert><div class="topic-panel-inner"><p class="topic-panel-label">${esc(topic.title)}</p><p class="topic-panel-hint">${items.length} 篇内容 · 点按封面展开</p>${items.length ? `<ul class="topic-reading-list">${items.map(id => `<li><a href="#article/${id}">${esc(stories[id].title)}</a></li>`).join('')}</ul>` : `<p class="topic-panel-intro">${esc(topic.intro)}</p><p class="topic-panel-empty">专题内容待补充</p>`}<a class="topic-panel-more" href="#topic/${key}">浏览${esc(topic.title)}<span aria-hidden="true"> ›</span></a></div></div></section>`;
+    return `<section class="topic-slide" data-topic="${key}"><button class="topic-cover" type="button" aria-label="展开${esc(topic.title)}内容" aria-expanded="false" aria-controls="topic-panel-${key}"><span class="topic-art"><img src="assets/topics/${image}" alt="" loading="lazy" decoding="async"></span><span class="topic-cover-copy"><strong>${esc(topic.title)}</strong><small>${esc(subtitle)}</small></span><span class="topic-cover-number" aria-hidden="true">0${index + 1}</span></button><div class="topic-panel" id="topic-panel-${key}" aria-label="${esc(topic.title)}内容" aria-hidden="true" inert><div class="topic-panel-inner"><p class="topic-panel-label">${esc(topic.title)}</p><p class="topic-panel-hint">${items.length} 篇内容 · 点按封面展开</p>${items.length ? `<ul class="topic-reading-list">${items.map(readingItem).join('')}</ul>` : `<p class="topic-panel-intro">${esc(topic.intro)}</p><p class="topic-panel-empty">专题内容待补充</p>`}<a class="topic-panel-more" href="#topic/${key}">浏览${esc(topic.title)}<span aria-hidden="true"> ›</span></a></div></div></section>`;
   }).join('');
   const slides = Array.from(grid.querySelectorAll('.topic-slide'));
   let active = null;
@@ -62,23 +74,14 @@
   grid.addEventListener('pointerleave', () => { if (!grid.contains(document.activeElement)) open(null); });
   grid.addEventListener('focusout', () => queueMicrotask(() => { if (!grid.contains(document.activeElement) && !grid.matches(':hover')) open(null); }));
   grid.addEventListener('keydown', e => { if (e.key === 'Escape' && active) { const button = active.querySelector('.topic-cover'); button.focus(); open(null); e.preventDefault(); } });
-  // Keep each original cover's artwork proportions while its neighbour slides out.
+  // Match the portrait cover proportions while keeping the panel width stable.
   function resize() {
     const width = grid.clientWidth;
     const mobile = matchMedia('(max-width:800px)').matches;
     grid.style.setProperty('--topic-cover-width', (mobile ? Math.min(width * .38, 180) : (width - 60) / 5.2) + 'px');
-    grid.style.setProperty('--topic-cover-height', (((width - 60) / 4 - 2) * 807 / 458 + 2) + 'px');
+    grid.style.setProperty('--topic-cover-height', (((width - 60) / 4 - 2) * 3 / 2 + 2) + 'px');
   }
   new ResizeObserver(resize).observe(grid);
-  // Scale both axes together; when a panel opens, crop the cover's left edge
-  // rather than stretching the artwork or its vertical title.
-  const artworkObserver = new ResizeObserver(entries => {
-    for (const entry of entries) {
-      const {width, height} = entry.contentRect;
-      entry.target.style.setProperty('--topic-art-width', Math.max(width, height * 458 / 807) + 'px');
-    }
-  });
-  for (const slide of slides) artworkObserver.observe(slide.querySelector('.topic-cover'));
   resize();
   if (/^#(?:article|topic)\//.test(location.hash)) updateRoute();
 })();
