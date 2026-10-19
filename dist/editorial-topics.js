@@ -37,9 +37,13 @@
     {key:'centenary', image:'centenary.webp', subtitle:'百年文脉 · 共赴新程'},
     {key:'gallery', image:'gallery.webp', subtitle:'光影流年 · 珍藏记忆'}
   ];
+  // User-approved sample dates for the demo; retain supplied dates when available.
+  const demoDates = Object.fromEntries([...new Set(Object.values(lists).flat())].map((id, index) =>
+    [id, new Date(Date.UTC(2026, 9, 16 - index * 3)).toISOString().slice(0, 10).replaceAll('-', '.')]
+  ));
   function readingItem(id) {
-    const date = storyDate[id];
-    const stamp = date ? `<time datetime="${date.replaceAll('.', '-')}">${esc(date)}</time>` : '<span>日期待补充</span>';
+    const date = storyDate[id] || demoDates[id];
+    const stamp = `<time datetime="${date.replaceAll('.', '-')}">${esc(date)}</time>`;
     return `<li><a href="#article/${id}"><span class="topic-row-title">${esc(stories[id].title)}</span><span class="topic-row-date"><span>${stamp}</span></span></a></li>`;
   }
   grid.classList.add('topic-accordion');
