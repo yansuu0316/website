@@ -67,8 +67,18 @@
     const width = grid.clientWidth;
     const mobile = matchMedia('(max-width:800px)').matches;
     grid.style.setProperty('--topic-cover-width', (mobile ? Math.min(width * .38, 180) : (width - 60) / 5.2) + 'px');
+    grid.style.setProperty('--topic-cover-height', (((width - 60) / 4 - 2) * 807 / 458 + 2) + 'px');
   }
   new ResizeObserver(resize).observe(grid);
+  // Scale both axes together; when a panel opens, crop the cover's left edge
+  // rather than stretching the artwork or its vertical title.
+  const artworkObserver = new ResizeObserver(entries => {
+    for (const entry of entries) {
+      const {width, height} = entry.contentRect;
+      entry.target.style.setProperty('--topic-art-width', Math.max(width, height * 458 / 807) + 'px');
+    }
+  });
+  for (const slide of slides) artworkObserver.observe(slide.querySelector('.topic-cover'));
   resize();
   if (/^#(?:article|topic)\//.test(location.hash)) updateRoute();
 })();
