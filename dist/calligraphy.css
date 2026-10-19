@@ -1,5 +1,5 @@
-/* C keeps its vertical lettering and shows the upper half of lecture posters. */
-.calligraphy-version #exchange .poster-image{height:auto;aspect-ratio:var(--poster-half-ratio,4 / 3);box-sizing:content-box}
+/* C keeps its vertical lettering and uses a shared crop ratio to align lecture poster bottoms. */
+.calligraphy-version #exchange .poster-image{height:auto;aspect-ratio:7 / 5;box-sizing:content-box}
 .calligraphy-version #exchange .poster-image img{width:100%;height:auto;object-fit:cover;object-position:center top}
 .calligraphy-version .script-bg{position:absolute;width:clamp(100px,13.5vw,210px);height:auto;aspect-ratio:1/4;top:50%;bottom:auto;transform:translateY(-50%);font-size:0;color:transparent;letter-spacing:0;background:var(--red);opacity:.055;pointer-events:none;mask-image:url('assets/motto-brush.webp');mask-size:400% 100%;mask-repeat:no-repeat;mask-mode:alpha}
 .calligraphy-version .exchange-script{right:-12px;mask-position:66.666667% 0}

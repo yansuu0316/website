@@ -3,12 +3,13 @@
 .editorial-version:not(.calligraphy-version) #exchange .poster-summary{display:none}
 /* B only: the supplied stone lettering appears within the red card surfaces. */
 .editorial-version:not(.calligraphy-version) #life .photo-card{position:relative;isolation:isolate;transition:background-color .2s,color .2s}
-.editorial-version:not(.calligraphy-version) #life .photo-card::before,.editorial-version:not(.calligraphy-version) .topic-open::before{content:"";position:absolute;inset:0;pointer-events:none;background:#6d0914;mask-image:url('assets/hover-inscription.jpg');mask-mode:luminance;mask-repeat:no-repeat;mask-size:95% auto;mask-position:right 14px bottom 12px;opacity:0;transition:opacity .2s;z-index:-1}
+.editorial-version:not(.calligraphy-version) #life .photo-card::before,.editorial-version:not(.calligraphy-version) .topic-open::before{content:"";position:absolute;inset:0;pointer-events:none;background:#6d0914;mask-image:url('assets/hover-inscription-compact.svg');mask-mode:luminance;mask-repeat:no-repeat;mask-size:95% auto;mask-position:right 14px bottom 12px;opacity:0;transition:opacity .2s;z-index:-1}
+.editorial-version:not(.calligraphy-version) #life .photo-card::before{inset:auto 12px 8px auto;width:44%;max-width:180px;height:38px;mask-size:contain;mask-position:right bottom}
 .editorial-version:not(.calligraphy-version) #life .photo-card:is(:hover,:focus-visible){background:var(--red);color:#fff}
 .editorial-version:not(.calligraphy-version) #life .photo-card:is(:hover,:focus-visible)::before{opacity:.45}
 .editorial-version:not(.calligraphy-version) #life .photo-card:is(:hover,:focus-visible) :is(h3,p,.meta){color:#fff}
 .editorial-version:not(.calligraphy-version) .topic-open{isolation:isolate;background:var(--red)}
-.editorial-version:not(.calligraphy-version) .topic-open::before{opacity:.45;mask-position:center;mask-size:92% auto}
+.editorial-version:not(.calligraphy-version) .topic-open::before{opacity:.35;mask-position:right 12px center;mask-size:58% auto}
 @media(prefers-reduced-motion:reduce){.editorial-version:not(.calligraphy-version) #life .photo-card,.editorial-version:not(.calligraphy-version) #life .photo-card::before,.editorial-version:not(.calligraphy-version) .topic-open::before{transition:none}}
 .editorial-version .section-head h2.editorial-heading{display:block;font-family:var(--serif);font-size:40px;font-weight:700;line-height:1.4;letter-spacing:1px;color:var(--ink)}
 .editorial-heading .heading-eyebrow{display:block;font:650 10px/1.6 var(--sans);letter-spacing:2.5px;color:var(--red);margin-bottom:8px}
