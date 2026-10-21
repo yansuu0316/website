@@ -31,12 +31,12 @@
       const group = groups[name];
       const panel = document.getElementById('education-content');
       panel.setAttribute('aria-labelledby', `education-${name}`);
-      panel.innerHTML = `<div class="education-program-panel">
-        <a class="education-program-feature" href="#article/${group.keys[0]}">
+      panel.innerHTML = `<div class="education-panel">
+        <a class="education-feature" href="#article/${group.keys[0]}">
           <div class="education-program-image"><img src="assets/${group.image}" width="${group.width}" height="${group.height}" alt="${esc(group.titles[0])}" loading="lazy" decoding="async"></div>
-          <h3>${esc(group.titles[0])}<span aria-hidden="true">↗</span></h3>
+          <div><h3>${esc(group.titles[0])}</h3></div>
         </a>
-        <div class="education-program-list">${group.titles.slice(1).map((title, index) => `<a href="#article/${group.keys[index + 1]}"><span class="education-program-index" aria-hidden="true">0${index + 2}</span><h3>${esc(title)}</h3><span class="education-program-arrow" aria-hidden="true">↗</span></a>`).join('')}</div>
+        <div class="education-list">${group.titles.slice(1).map((title, index) => `<a class="list-link" href="#article/${group.keys[index + 1]}"><h3>${esc(title)}</h3></a>`).join('')}</div>
       </div>`;
     }
   };

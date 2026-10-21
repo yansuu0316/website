@@ -1,23 +1,12 @@
 @font-face{font-family:"Campus Sans";src:url("assets/type/EducationSans-Regular.woff2") format("woff2");font-style:normal;font-weight:100 500;font-display:swap;unicode-range:U+5E26,U+680F,U+7279,U+7ECD,U+8272,U+901B,U+914D}
 @font-face{font-family:"Campus Sans";src:url("assets/type/EducationSans-Bold.woff2") format("woff2");font-style:normal;font-weight:501 900;font-display:swap;unicode-range:U+5E26,U+680F,U+7279,U+7ECD,U+8272,U+901B,U+914D}
+/* Keep the original education layout; only the supplied content changes. */
 .education .education-tabs button{white-space:nowrap}
-.education .education-tabs{min-width:330px}
-/* B-only education programmes: natural image proportions, with a quiet text index. */
-.education-program-panel{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:clamp(28px,4vw,64px);align-items:stretch}
-.education-program-feature{display:block;min-width:0;max-width:520px}
-.education-program-image{aspect-ratio:3/2;background:#f5f3f0;overflow:hidden;display:flex;align-items:center;justify-content:center}
-.education-program-image img{display:block;width:100%;height:100%;object-fit:contain}
-.education-program-feature h3{display:flex;justify-content:space-between;gap:16px;font:700 clamp(16px,1.35vw,21px)/1.7 var(--sans);margin:16px 0 0;color:var(--ink)}
-.education-program-feature h3 span{font-size:22px;font-weight:400;color:var(--red)}
-.education-program-list{display:flex;flex-direction:column;min-width:0;width:100%;max-width:560px;align-self:start}
-.education-program-list a{display:flex;align-items:center;gap:18px;flex:none;min-height:78px;border-bottom:1px solid var(--line);padding:18px 0}
-.education-program-list a:first-child{border-top:1px solid var(--line)}
-.education-program-index{font:400 18px/1 Georgia,serif;color:#b59a9d;flex-shrink:0}
-.education-program-list h3{font:600 clamp(15px,1.3vw,20px)/1.8 var(--sans);margin:0;flex:1}
-.education-program-arrow{color:var(--red);font-size:20px;transition:transform .2s}
-.education-program-list a:hover h3,.education-program-feature:hover h3{color:var(--red)}
-.education-program-list a:hover .education-program-arrow{transform:translate(3px,-3px)}
-.education-program-panel a:focus-visible{outline:2px solid var(--red);outline-offset:5px}
-@media(max-width:1000px){.education .section-head{flex-wrap:wrap;gap:20px}.education .section-actions{width:100%;justify-content:space-between}.education .education-tabs{min-width:0}.education .education-tabs button{padding:8px 16px}.education-program-list a{gap:14px;padding:16px 0}}
-@media(max-width:650px){.education-program-panel{grid-template-columns:1fr;gap:22px}.education-program-feature{max-width:none}.education-program-feature h3{font-size:16px;margin-top:12px}.education-program-list a{min-height:70px;padding:17px 0}.education-program-list h3{font-size:15px}.education .education-tabs button{padding:8px 9px;font-size:12px;white-space:nowrap}.education-program-index{font-size:16px}}
-@media(prefers-reduced-motion:reduce){.education-program-arrow{transition:none}}
+.education .education-panel{align-items:stretch}
+.education .education-feature{min-width:0}
+.education .education-program-image{position:relative;width:220px;min-height:145px;flex-shrink:0;overflow:hidden}
+.education .education-panel .education-program-image img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
+.education .education-list{display:flex;flex-direction:column}
+.education .education-list .list-link{flex:1}
+@media(max-width:1000px){.education .education-program-image{width:150px;min-height:120px}}
+@media(max-width:650px){.education .education-program-image{width:135px;min-height:100px}}
