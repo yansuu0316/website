@@ -28,7 +28,7 @@
 @media(max-width:560px){.editorial-version .section-head h2.editorial-heading{font-size:29px;letter-spacing:0}.editorial-version #notices .section-head h2.editorial-heading{font-size:29px}.editorial-version .section-head h2.editorial-heading small{font-size:10px;letter-spacing:2px}.editorial-version .services h2.editorial-heading{flex-basis:100%}.editorial-version .services h2.editorial-heading small{display:inline-block;margin-left:12px}.editorial-version .services .heading-eyebrow{display:block}}
 
 /* B story slides: white title over the photograph, without a caption strip. */
-.editorial-version:not(.calligraphy-version) .classic-hero.story-slide{height:31.09375vw;background:#171c24;padding:0;color:#fff}
+.editorial-version:not(.calligraphy-version) .classic-hero.story-slide{height:590px;background:#171c24;padding:0;color:#fff}
 .editorial-version:not(.calligraphy-version) .classic-hero.story-slide .hero-image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 48%}
 .editorial-version:not(.calligraphy-version) .classic-hero.story-slide .hero-image[src*="go-global"]{object-position:center 40%}
 .editorial-version:not(.calligraphy-version) .classic-hero.story-slide :is(.hero-shade,.hero-content>.eyebrow,.hero-kicker,#hero-description,.hero-link,.hero-motto,.hero-side){display:none}
@@ -39,13 +39,29 @@
 .editorial-version:not(.calligraphy-version) .classic-hero.story-slide .hero-controls{pointer-events:auto;text-shadow:0 1px 4px #000b}
 .editorial-version:not(.calligraphy-version) .classic-hero.story-slide .hero-controls button{color:#fff;border-color:#ffffffa0;text-shadow:0 1px 4px #000b}
 @media(max-width:850px){
- .editorial-version:not(.calligraphy-version) .classic-hero.story-slide{height:auto}
- .editorial-version:not(.calligraphy-version) .classic-hero.story-slide .hero-image{position:relative;inset:auto;height:auto;object-fit:contain;object-position:center}
- .editorial-version:not(.calligraphy-version) .classic-hero.story-slide .hero-content{position:absolute;bottom:12px;left:4%;width:92%;padding:0}
+ .editorial-version:not(.calligraphy-version) .classic-hero.story-slide{height:540px}
+ .editorial-version:not(.calligraphy-version) .classic-hero.story-slide .hero-image{position:absolute;inset:0;height:100%;object-fit:contain;object-position:center}
+ .editorial-version:not(.calligraphy-version) .classic-hero.story-slide .hero-content{position:absolute;bottom:30px;left:4%;width:92%;padding:0}
  .editorial-version:not(.calligraphy-version) .classic-hero.story-slide .hero-bottom{position:absolute;top:10px;bottom:auto;left:4%;width:92%;height:auto;margin:0;padding:0;align-items:center}
  .editorial-version:not(.calligraphy-version) .classic-hero.story-slide h1{font-size:clamp(14px,3vw,24px);line-height:1.5;letter-spacing:0}
  .editorial-version:not(.calligraphy-version) .classic-hero.story-slide:has(.hero-image[src*="students"]) h1{font-size:clamp(11px,2.7vw,21px);white-space:nowrap}
  .editorial-version:not(.calligraphy-version) .classic-hero.story-slide .hero-controls{gap:8px}
  .editorial-version:not(.calligraphy-version) .classic-hero.story-slide .hero-controls button{width:24px;height:24px;font-size:13px}
  .editorial-version:not(.calligraphy-version) .classic-hero.story-slide .hero-controls>span{font-size:18px}
+}
+
+/* Match the first slide's height at every breakpoint. */
+@media(min-width:1600px){.editorial-version:not(.calligraphy-version) .classic-hero.story-slide{height:650px}}
+@media(max-width:600px){.editorial-version:not(.calligraphy-version) .classic-hero.story-slide{height:570px}}
+@media(max-width:850px){
+ .editorial-version:not(.calligraphy-version) .classic-hero.story-slide{background:#282a2e}
+ .editorial-version:not(.calligraphy-version) .classic-hero.story-slide::before{content:"";position:absolute;inset:-25px;background:var(--story-backdrop) center/cover;filter:blur(22px) brightness(.55);pointer-events:none}
+ .editorial-version:not(.calligraphy-version) .classic-hero.story-slide h1{font-size:20px;line-height:1.6;text-wrap:balance}
+ .editorial-version:not(.calligraphy-version) .classic-hero.story-slide .hero-image[src*="go-global"]{object-position:center}
+}
+@media(max-width:850px){
+ .editorial-version:not(.calligraphy-version) .classic-hero.story-slide::before{z-index:0}
+ .editorial-version:not(.calligraphy-version) .classic-hero.story-slide .hero-image{z-index:1}
+ .editorial-version:not(.calligraphy-version) .classic-hero.story-slide .hero-content{z-index:2}
+ .editorial-version:not(.calligraphy-version) .classic-hero.story-slide .hero-bottom{z-index:3}
 }

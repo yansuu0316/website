@@ -1,0 +1,36 @@
+@font-face{font-family:"Faculty Sans";src:url("assets/type/FacultySans-Regular.woff2") format("woff2");font-weight:100 500;font-style:normal;font-display:swap}
+@font-face{font-family:"Faculty Sans";src:url("assets/type/FacultySans-Bold.woff2") format("woff2");font-weight:501 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Faculty Serif";src:url("assets/type/FacultySerif-Bold.woff2") format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+/* B-only faculty: prose statistics and a continuous portrait filmstrip. */
+.faculty-section{background:#f7f5f2;--sans:"Faculty Sans","Campus Sans",sans-serif;--serif:"Faculty Serif","Campus Serif",serif;font-family:var(--sans)}
+.faculty-prose{padding:5px 0 42px;max-width:1200px}
+.faculty-prose p{font:500 clamp(15px,1.35vw,21px)/2.8 var(--serif);color:#5d5450;margin:4px 0;letter-spacing:.5px}
+.faculty-prose .faculty-lead{font:500 clamp(17px,1.6vw,25px)/1.8 var(--serif);color:var(--ink);margin:0 0 16px}
+.faculty-prose strong{font:500 clamp(32px,3vw,48px)/1 var(--sans);color:var(--red);display:inline-block;vertical-align:baseline;padding:0 4px;font-variant-numeric:tabular-nums}
+.faculty-keep{white-space:nowrap}
+/* A compact continuous faculty filmstrip; motion pauses on hover and focus. */
+.faculty-film{padding-top:17px;border-top:1px solid #ddd3c7}
+.faculty-reel{overflow-x:auto;scrollbar-width:none;outline-offset:6px;padding:16px 0 10px;position:relative}
+.faculty-reel::-webkit-scrollbar{display:none}
+.faculty-reel:focus-visible{outline:2px solid var(--red)}
+.faculty-film-track{display:flex;width:max-content}
+.faculty-film-group{display:flex;gap:24px;list-style:none;margin:0;padding:0 24px 0 0}
+.faculty-frame{width:190px;flex-shrink:0;padding:13px 0 18px;position:relative}
+.faculty-frame:before,.faculty-frame:after{content:"";position:absolute;left:0;right:0;height:4px;background:repeating-linear-gradient(90deg,#d5c9bb 0 8px,transparent 8px 18px)}
+.faculty-frame:before{top:0}.faculty-frame:after{bottom:0}
+.faculty-portrait{width:100%;aspect-ratio:4/5;overflow:hidden;background:#e6dfd5}
+.faculty-portrait img{display:block;width:100%;height:100%;object-fit:cover;transform:scale(var(--portrait-zoom,1));transform-origin:var(--portrait-origin,50% 30%)}
+.faculty-portrait img[alt="许钧"]{--portrait-zoom:1.1}
+.faculty-portrait img[alt="何莲珍"]{--portrait-zoom:1.65;--portrait-origin:50% 35%}
+.faculty-portrait img[alt="屈文生"]{--portrait-zoom:1.3}
+.faculty-portrait img[alt="程工"]{--portrait-zoom:1.5;--portrait-origin:50% 20%}
+.faculty-portrait img[alt="梁君英"]{--portrait-zoom:1.4}
+.faculty-frame h3{font:700 23px/1.5 var(--serif);letter-spacing:2px;margin:13px 0 5px;color:var(--ink)}
+.faculty-frame p{font:400 12px/1.8 var(--sans);color:#857264;margin:0;max-width:190px;min-height:44px}
+.faculty-film-caption{display:flex;align-items:center;justify-content:space-between;margin-top:12px;color:#948472;font:400 11px/1.8 var(--sans);letter-spacing:2px}
+.faculty-film-caption i{font-style:normal;padding:0 10px;color:#b6a58f}
+.faculty-motion{font:400 11px/1.8 var(--sans);letter-spacing:1px;color:#806e60;padding:5px 0 5px 12px}
+.faculty-motion span{color:var(--red);margin-left:8px}
+.faculty-motion:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+@media(min-width:1600px){.faculty-frame{width:205px}}
+@media(max-width:700px){.faculty-prose{padding-bottom:23px}.faculty-prose p{font-family:var(--sans);font-weight:400;line-height:2.6;font-size:14px;margin:12px 0}.faculty-prose strong{font-size:31px;padding:0 2px}.faculty-prose .faculty-lead{font-size:18px;line-height:1.9;max-width:17em}.faculty-keep{white-space:normal}.faculty-film{padding-top:8px}.faculty-frame{width:145px}.faculty-film-group{gap:17px;padding-right:17px}.faculty-frame h3{font-size:20px;margin-top:10px}.faculty-frame p{font-size:11px;min-height:60px}.faculty-film-caption{font-size:10px;letter-spacing:1px}.faculty-motion{font-size:10px}}
