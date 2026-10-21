@@ -3,7 +3,7 @@
 @font-face{font-family:"Faculty Serif";src:url("assets/type/FacultySerif-Bold.woff2") format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
 /* B-only faculty: statistics boards and a continuous portrait filmstrip. */
 .faculty-section{background:#f7f5f2;--sans:"Faculty Sans","Campus Sans",sans-serif;--serif:"Faculty Serif","Campus Serif",serif;font-family:var(--sans)}
-.faculty-lead{font:500 clamp(17px,1.6vw,25px)/1.8 var(--serif);color:var(--ink);margin:5px 0 25px}
+
 .faculty-stats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;margin:0 0 36px}
 .faculty-stat{display:flex;flex-direction:column;background:#fffdf9;border:1px solid #e5dcd2;text-align:center;padding:22px 12px 19px;min-width:0}
 .faculty-stat dt{order:2;font:500 14px/1.7 var(--sans);color:#70635c;margin-top:10px}
@@ -36,4 +36,4 @@
 .faculty-motion:focus-visible{outline:2px solid var(--red);outline-offset:3px}
 @media(min-width:1600px){.faculty-frame{width:205px}}
 @media(max-width:900px) and (min-width:701px){.faculty-stats{gap:10px}.faculty-stat{padding:18px 7px}.faculty-stat dt{font-size:12px}}
-@media(max-width:700px){.faculty-lead{font-size:18px;line-height:1.9;margin-bottom:20px}.faculty-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:25px}.faculty-stat{padding:16px 8px}.faculty-stat dt{font-size:12px;margin-top:6px}.faculty-stat strong{font-size:38px}.faculty-stat dd span{font-size:11px}.faculty-film{padding-top:8px}.faculty-frame{width:145px}.faculty-film-group{gap:17px;padding-right:17px}.faculty-frame h3{font-size:20px;margin-top:10px}.faculty-frame p{font-size:11px;min-height:60px}.faculty-film-caption{font-size:10px;letter-spacing:1px}.faculty-motion{font-size:10px}}
+@media(max-width:700px){.faculty-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:25px}.faculty-stat{padding:16px 8px}.faculty-stat dt{font-size:12px;margin-top:6px}.faculty-stat strong{font-size:38px}.faculty-stat dd span{font-size:11px}.faculty-film{padding-top:8px}.faculty-frame{width:145px}.faculty-film-group{gap:17px;padding-right:17px}.faculty-frame h3{font-size:20px;margin-top:10px}.faculty-frame p{font-size:11px;min-height:60px}.faculty-film-caption{font-size:10px;letter-spacing:1px}.faculty-motion{font-size:10px}}
