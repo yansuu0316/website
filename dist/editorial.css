@@ -28,17 +28,18 @@
 @media(max-width:560px){.editorial-version .section-head h2.editorial-heading{font-size:29px;letter-spacing:0}.editorial-version #notices .section-head h2.editorial-heading{font-size:29px}.editorial-version .section-head h2.editorial-heading small{font-size:10px;letter-spacing:2px}.editorial-version .services h2.editorial-heading{flex-basis:100%}.editorial-version .services h2.editorial-heading small{display:inline-block;margin-left:12px}.editorial-version .services .heading-eyebrow{display:block}}
 
 /* B story slides: keep faces clear, with the title below the photograph. */
-.editorial-version:not(.calligraphy-version) .classic-hero.story-slide{background:#171c24;padding-bottom:0}
-.editorial-version:not(.calligraphy-version) .classic-hero.story-slide .hero-image{position:absolute;inset:0;width:100%;height:calc(100% - 102px);object-fit:cover;object-position:center 48%}
+.editorial-version:not(.calligraphy-version) .classic-hero.story-slide{background:#fff;padding-bottom:0;color:var(--ink)}
+.editorial-version:not(.calligraphy-version) .classic-hero.story-slide .hero-image{position:absolute;inset:0;width:100%;height:calc(100% - 102px);object-fit:cover;object-position:center 48%;background:#171c24}
 .editorial-version:not(.calligraphy-version) .classic-hero.story-slide .hero-image[src*="students"]{object-fit:contain}
 .editorial-version:not(.calligraphy-version) .classic-hero.story-slide :is(.hero-shade,.hero-content>.eyebrow,.hero-kicker,#hero-description,.hero-link,.hero-motto,.hero-side){display:none}
-.editorial-version:not(.calligraphy-version) .classic-hero.story-slide .hero-content{position:absolute;bottom:0;left:0;width:100%;padding:22px calc(6% + 260px) 22px 6%;min-height:102px;display:flex;align-items:center;background:var(--deep)}
+.editorial-version:not(.calligraphy-version) .classic-hero.story-slide .hero-content{position:absolute;bottom:0;left:0;width:100%;padding:22px calc(6% + 260px) 22px 6%;min-height:102px;display:flex;align-items:center;background:transparent}
 .editorial-version:not(.calligraphy-version) .classic-hero.story-slide h1{font:700 clamp(20px,2vw,32px)/1.5 var(--sans);letter-spacing:1px;text-shadow:none}
 .editorial-version:not(.calligraphy-version) .classic-hero.story-slide h1 br{display:none}
 .editorial-version:not(.calligraphy-version) .classic-hero.story-slide .hero-bottom{bottom:0;height:102px;justify-content:flex-end;pointer-events:none}
 .editorial-version:not(.calligraphy-version) .classic-hero.story-slide .hero-controls{pointer-events:auto}
+.editorial-version:not(.calligraphy-version) .classic-hero.story-slide .hero-controls button{color:var(--red);border-color:#b21e2b50}
 @media(max-width:850px){
- .editorial-version:not(.calligraphy-version) .classic-hero.story-slide{height:auto;background:var(--deep)}
+ .editorial-version:not(.calligraphy-version) .classic-hero.story-slide{height:auto;background:#fff}
  .editorial-version:not(.calligraphy-version) .classic-hero.story-slide .hero-content{position:relative;bottom:auto;left:auto;width:88%;padding:18px 0;min-height:0}
  .editorial-version:not(.calligraphy-version) .classic-hero.story-slide .hero-image{position:relative;inset:auto;height:auto;object-fit:contain;object-position:center}
  .editorial-version:not(.calligraphy-version) .classic-hero.story-slide .hero-bottom{position:relative;left:auto;height:auto;margin:0 auto;padding:0 0 18px;align-items:center}
